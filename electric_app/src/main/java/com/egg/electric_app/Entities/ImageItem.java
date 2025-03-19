@@ -5,10 +5,12 @@ import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ImageItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,9 +18,9 @@ public class ImageItem {
     
     private String mime;
     
-    private String nombre;
+    private String name;
     
     @Lob @Basic(fetch = FetchType.LAZY)
-    private byte[] contenido;
+    private byte[] content;
     
 }

@@ -4,10 +4,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "items")
 @Data
+@NoArgsConstructor
 public class Item {
 
     private static final AtomicInteger atomicInteger = new AtomicInteger(0);
@@ -27,7 +29,7 @@ public class Item {
 
     @ManyToOne
     private Factory factory;
-
+    
     public Item(String name, String description, double price, int stock, ImageItem image, Factory factory) {
         this.name = name;
         this.description = description;

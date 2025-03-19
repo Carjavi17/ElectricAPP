@@ -5,12 +5,14 @@ import com.egg.electric_app.Enums.Rol;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
 @Data
 @AllArgsConstructor
-public class User {
+@NoArgsConstructor
+public class UserElectric {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
