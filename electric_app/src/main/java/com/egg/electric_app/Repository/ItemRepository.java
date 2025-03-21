@@ -10,10 +10,10 @@ import com.egg.electric_app.Entities.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, UUID> {
 
-    @Query("SELECT i FROM Items i WHERE i.name = :name")
+    @Query("SELECT i FROM Item i WHERE i.name = :name")
     public Item findByName(@Param("name") String nombre);
 
-    @Query("SELECT i FROM Items i WHERE i.code = :code")
+    @Query("SELECT i FROM Item i WHERE i.code = :code")
     public Item findByCode(@Param("code") Integer code);
 
     

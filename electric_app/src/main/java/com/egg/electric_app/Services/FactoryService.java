@@ -26,6 +26,7 @@ public class FactoryService {
         check(name);
 
         Factory factory = new Factory();
+        factory.setName(name);
 
         return factoryRepository.save(factory);
     }

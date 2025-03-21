@@ -51,21 +51,22 @@ public class UserService implements UserDetailsService {
 
         if (archivo != null && !archivo.isEmpty()) {
             user.setImage(imageUserService.save(archivo));
-        }        
+        }
 
         userRepository.save(user);
 
     }
 
     @Transactional
-    public void updateImage(MultipartFile archivo, UUID idUser, String email, String name, String lastName, String password ) throws MyException {
-        
-        check(email, name, lastName, password);
+    public void update(MultipartFile archivo, UUID idUser, String email, String name, String lastName, String password)
+            throws MyException {
+
+        checkEdit(email, name, lastName);
 
         Optional<UserElectric> answer = userRepository.findById(idUser);
 
         if (answer.isEmpty()) {
-            throw new MyException("User not found.");
+            throw new MyException("Usuario no encontrado.");
         }
 
         UserElectric user = answer.get();
@@ -73,13 +74,18 @@ public class UserService implements UserDetailsService {
         user.setEmail(email);
         user.setName(name);
         user.setLastName(lastName);
-        user.setPassword(new BCryptPasswordEncoder().encode(password));
+
+
+        if (password != null && !password.trim().isEmpty()) {
+            user.setPassword(new BCryptPasswordEncoder().encode(password));
+        }
 
         if (archivo != null && !archivo.isEmpty()) {
             String idImage = user.getImage() != null ? user.getImage().getId().toString() : null;
             ImageUser image = imageUserService.update(archivo, idImage != null ? UUID.fromString(idImage) : null);
             user.setImage(image);
         }
+
         userRepository.save(user);
     }
 
@@ -89,40 +95,51 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public UserElectric getByEmail(UUID id) {
+    public UserElectric getById(UUID id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    public void changeRol(UUID id){
+    public void changeRol(UUID id) {
 
         Optional<UserElectric> answer = userRepository.findById(id);
 
-        if(answer.isPresent()){
+        if (answer.isPresent()) {
             UserElectric user = answer.get();
-            if(user.getRol().equals(Rol.USER)){
+            if (user.getRol().equals(Rol.USER)) {
                 user.setRol(Rol.ADMIN);
-            }else if (user.getRol().equals(Rol.ADMIN)){
+            } else if (user.getRol().equals(Rol.ADMIN)) {
                 user.setRol(Rol.USER);
             }
-            
+
         }
     }
 
     public void check(String email, String name, String lastName, String password) throws MyException {
         if (name == null || name.trim().isEmpty()) {
-            throw new MyException("Name cannot be null or empty. Please try again.");
+            throw new MyException("El nombre no puede estar vacío.");
         }
         if (lastName == null || lastName.trim().isEmpty()) {
-            throw new MyException("Last name cannot be null or empty. Please try again.");
+            throw new MyException("El apellido no puede estar vacío.");
         }
         if (email == null || email.trim().isEmpty()) {
-            throw new MyException("Email cannot be null or empty. Please try again.");
+            throw new MyException("El email no puede estar vacío.");
         }
         if (password == null || password.trim().isEmpty()) {
-            throw new MyException("Password cannot be null or empty. Please try again.");
+            throw new MyException("La contraseña no puede estar vacía.");
         }
+    }
 
+    public void checkEdit(String email, String name, String lastName) throws MyException {
+        if (name == null || name.trim().isEmpty()) {
+            throw new MyException("El nombre no puede estar vacío.");
+        }
+        if (lastName == null || lastName.trim().isEmpty()) {
+            throw new MyException("El apellido no puede estar vacío.");
+        }
+        if (email == null || email.trim().isEmpty()) {
+            throw new MyException("El email no puede estar vacío.");
+        }
     }
 
     @Override
@@ -133,8 +150,8 @@ public class UserService implements UserDetailsService {
         if (user != null) {
 
             List<GrantedAuthority> permisos = new ArrayList<>();
-            
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+ user.getRol().toString());
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + user.getRol().toString());
 
             permisos.add(p);
 
@@ -144,7 +161,7 @@ public class UserService implements UserDetailsService {
             session.setAttribute("usersession", user);
 
             return new User(user.getEmail(), user.getPassword(), permisos);
-        }else{
+        } else {
             return null;
         }
     }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserElectric {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idUser;
 
     private String email;
@@ -25,7 +25,8 @@ public class UserElectric {
 
     @OneToOne
     private ImageUser image;
-
+    
+    @Enumerated(EnumType.STRING)
     private Rol rol;
 
     

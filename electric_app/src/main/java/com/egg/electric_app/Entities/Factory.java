@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Factory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idFactory;
 
     private String name;    

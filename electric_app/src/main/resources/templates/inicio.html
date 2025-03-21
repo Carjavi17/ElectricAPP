@@ -1,21 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    
+    <!-- Reemplazamos nuestro head por el fragmento de head -->
     <head th:replace="~{fragments/head :: head}"></head>
+
 <!-- MODIFICAMOS NUESTRO ARCHIVO INDEX PARA QUE SEA LA VISTA AL INGRESAR A LA PÁGINA SIN LOGGEARNOS Y CREAMOS UN ARCHIVO INICIO PARA 
     LA VISTA QUE VEREMOS AL INICIAR SESION -->
     <body>
         <nav th:replace="~{fragments/navbar :: nav}"></nav>
-        
         <div th:replace="~{fragments/mensajeEE :: div}"></div>
-        
+
         <header class="header">
             <section class="contenedorMain">
                 <div class="tituloBiblioteca">
                     <a class="navbar-brand" href="#">FERRETERIA EGG</a>
                 </div>
                 <div class="container contenedorLibros">
-                    <p class="tituloLibros">Encontrá todos los Articulos acá!</p>
+                    <p class="tituloLibros" th:if="${session != null and session.usersession != null}" th:text="'Hola de vuelta ' + ${session.usersession.name}"></p>
 
+                    <!-- <a class="btn btn-xl mt-2 boton">Ver Listado</a> -->
+                </div>
+                <div class="imagenContainer">
+                    <a class="d-flex align-items-center">
+                        <img class="logo" th:src="@{/imagen/perfil/__${session.usersession.idUser}__}"alt="Img perfil">
+                    </a>
                 </div>
                 <div class="bg-circle-1 bg-circle"></div>
                 <div class="bg-circle-2 bg-circle"></div>
@@ -23,7 +31,6 @@
                 <div class="bg-circle-4 bg-circle"></div>
             </section>
         </header>
-        
 
         <footer th:replace="~{fragments/footer :: footer}"></footer>
 

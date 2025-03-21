@@ -1,29 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <head th:replace="~{fragments/head :: head}"></head>
-<!-- MODIFICAMOS NUESTRO ARCHIVO INDEX PARA QUE SEA LA VISTA AL INGRESAR A LA PÁGINA SIN LOGGEARNOS Y CREAMOS UN ARCHIVO INICIO PARA 
-    LA VISTA QUE VEREMOS AL INICIAR SESION -->
+
+<head th:replace="~{fragments/head :: head}"></head>
     <body>
         <nav th:replace="~{fragments/navbar :: nav}"></nav>
-        
-        <div th:replace="~{fragments/mensajeEE :: div}"></div>
-        
         <header class="header">
             <section class="contenedorMain">
                 <div class="tituloBiblioteca">
-                    <a class="navbar-brand" href="#">FERRETERIA EGG</a>
+                    <a class="navbar-brand" th:text="'Error ' + ${codigo}">FERRETERIA</a>
+                    <p class="tituloLibros" th:text="${mensaje}"></p>
+                    
                 </div>
-                <div class="container contenedorLibros">
-                    <p class="tituloLibros">Encontrá todos los Articulos acá!</p>
-
-                </div>
+                <section class="text-center container">
+			        <div class="row mt-3">
+                        <div class="divVolver">
+                            <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                        </div>
+			        </div>
+		        </section>
+                
                 <div class="bg-circle-1 bg-circle"></div>
                 <div class="bg-circle-2 bg-circle"></div>
                 <div class="bg-circle-3 bg-circle"></div>
                 <div class="bg-circle-4 bg-circle"></div>
             </section>
         </header>
-        
 
         <footer th:replace="~{fragments/footer :: footer}"></footer>
 

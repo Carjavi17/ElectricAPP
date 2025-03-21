@@ -15,7 +15,7 @@ public class Item {
     private static final AtomicInteger atomicInteger = new AtomicInteger(0);
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID idItem;
 
     private Integer code;

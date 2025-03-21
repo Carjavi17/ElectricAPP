@@ -10,7 +10,8 @@ import com.egg.electric_app.Entities.UserElectric;
 @Repository
 public interface UserRepository extends JpaRepository<UserElectric, UUID>{
 
-    @Query("SELECT u FROM Users u WHERE u.email = :email")
+    @Query("SELECT u FROM UserElectric u WHERE u.email = :email")
     public UserElectric findByEmail(@Param("email") String email);
+    
     
 }
